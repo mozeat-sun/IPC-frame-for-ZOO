@@ -13,9 +13,13 @@ Rules:
 4T是：for test：开发人员使用或者设备测试使用，方便编写测试UI，一般情况下不允许嵌入到运营的UI，主要原因：测试接口有可能不是项目需求，测试接口可靠性不高，安全性不够；
 
 2、	异步请求：以_req结尾，例如XX4A_initialize_req();
+
 3、	函数必须以 ZOO_EXPORT 开头；
+
 4、	异步获取结果:以_wait为结尾，例如XX4A_initialize_wait();
+
 5、	订阅回调函数指针：以XX4A_开头，以_CALLVACK_FUNCTION结尾，下划线，大写；
+
 例如	：XX4A_STATUS_CALLBACK_FUNCTION
 回调函数模板：
 typedef void(*XX4A_STATUS_CALLBACK_FUNCTION)(IN XX4A_STATUS_STRUCT status,
@@ -23,16 +27,22 @@ typedef void(*XX4A_STATUS_CALLBACK_FUNCTION)(IN XX4A_STATUS_STRUCT status,
 								      IN void *context);
 
 6、	订阅/取消订阅：以_subscribe/_unsubscribe为结尾，例如XX4A_status_info_subscribe(IN XX4A_STATUS_CALLBACK_FUNCTION callback_function, OUT ZOO_UINT32 *handle, INOUT void *context)/XX4A_status_info_unsubscribe()；
+
 7、	接口参数必须标明是输入还是输出：IN/OUT/INOUT
+
 二、数据结构
+
 1、每个XX组件提供：XX4A_STATUS_STRUCT接口体，用于订阅数据；
-	例如：
+
+例如：
 typedef struct
 {
 XX4A_STATE_ENUM state;//状态机
 ZOO_BOOL on_line;//是否在线	
 }XX4A_STATUS_STRUCT;
+
 2、提供错误定义
+
 	错误码定义：每个组件按照ascii的值进行错误码定义，例如X的ascii码为X，那么XX的错误码定义：0x58580000
 	每个组件必须提供以下错误码（用于通信端错误码提示）：
 	#define XX4A_BASE_ERR               (0x58580000)
@@ -41,6 +51,7 @@ ZOO_BOOL on_line;//是否在线
 #define XX4A_TIMEOUT_ERR            ((XX4A_BASE_ERR) + 0x03)
 #define XX4A_ILLEGAL_CALL_ERROR      ((XX4A_BASE_ERR) + 0x04)
 其他错误码可以在此基础上增加，错误码模块之间不能重叠
+
 3、提供组件名称宏定义：用于trace打印组件
 	#ifndef COMPONENT_ID_XX
 #define COMPONENT_ID_XX "XX"
@@ -52,7 +63,8 @@ ZOO_BOOL on_line;//是否在线
 		  -lib:外部调用源文件
 	      -inc:对外头文件
           -test
-三、代码生成器（Code Generator）
+	  
+四、代码生成器（Code Generator）
 	输入：XX4A_if.h/xx4a_type.h
 	输出：
 		-XX-
