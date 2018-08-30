@@ -34,23 +34,34 @@ typedef void(*XX4A_STATUS_CALLBACK_FUNCTION)(IN XX4A_STATUS_STRUCT status,
 
 1、每个XX组件提供：XX4A_STATUS_STRUCT接口体，用于订阅数据；
 
-例如：
-typedef struct
-{
-XX4A_STATE_ENUM state;//状态机
-ZOO_BOOL on_line;//是否在线	
-}XX4A_STATUS_STRUCT;
+	例如：
+
+	typedef struct
+
+	{
+		XX4A_STATE_ENUM state;//状态机
+	
+		ZOO_BOOL on_line;//是否在线	
+	
+	}XX4A_STATUS_STRUCT;
 
 2、提供错误定义
 
 	错误码定义：每个组件按照ascii的值进行错误码定义，例如X的ascii码为X，那么XX的错误码定义：0x58580000
+	
 	每个组件必须提供以下错误码（用于通信端错误码提示）：
+	
 	#define XX4A_BASE_ERR               (0x58580000)
-#define XX4A_SYSTEM_ERR             ((XX4A_BASE_ERR) + 0x01)
-#define XX4A_PARAMETER_ERR          ((XX4A_BASE_ERR) + 0x02)
-#define XX4A_TIMEOUT_ERR            ((XX4A_BASE_ERR) + 0x03)
-#define XX4A_ILLEGAL_CALL_ERROR      ((XX4A_BASE_ERR) + 0x04)
-其他错误码可以在此基础上增加，错误码模块之间不能重叠
+	
+	#define XX4A_SYSTEM_ERR             ((XX4A_BASE_ERR) + 0x01)
+
+	#define XX4A_PARAMETER_ERR          ((XX4A_BASE_ERR) + 0x02)
+
+	#define XX4A_TIMEOUT_ERR            ((XX4A_BASE_ERR) + 0x03)
+
+	#define XX4A_ILLEGAL_CALL_ERROR      ((XX4A_BASE_ERR) + 0x04)
+
+	其他错误码可以在此基础上增加，错误码模块之间不能重叠
 
 3、提供组件名称宏定义：用于trace打印组件
 	#ifndef COMPONENT_ID_XX
@@ -65,24 +76,45 @@ ZOO_BOOL on_line;//是否在线
           -test
 	  
 四、代码生成器（Code Generator）
+
 	输入：XX4A_if.h/xx4a_type.h
+	
 	输出：
+	
 		-XX-
+		
 		  -bin:
+		  
 			  -XX4A_main.c:进程main函数
+			  
               -XX4A_dispatch.c:消息分发组件
+	      
               -XX4A_event.c:消息回答/订阅组件
+	      
               -XX4A_implement.c:消息实现组件
+	      
           -com:
               -XX4A_dispatch.h:
+	      
               -XX4A_event.h:
+	      
               -XX4A_implement.h:
+	      
 		  -lib:
+		  
 			  -XX4A.c:接口消息组包
+			  
               -XX4I.c:接口消息发送与接收
+	      
 	      -inc:
+	      
 	          -XX4A_if.h
+		  
               -XX4A_type.h
+	      
           -test
+	  
        -XX4A.mk
+       
        -libXX4A.mk
+       
