@@ -1,5 +1,6 @@
 # IPC-frame-for-ZOO
 a python script for auto generate IPC frame code according header file
+
 Rules:
   							进程间通信代码框架规范
 每个组件需提供2个头文件：
